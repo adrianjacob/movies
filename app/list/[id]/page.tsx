@@ -2,6 +2,7 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import Link from "next/link";
 import Header from "@/app/components/header";
+import Toggle from "@/app/components/toggle";
 
 import type { Database } from "@/lib/database.types";
 
@@ -28,7 +29,14 @@ export default async function List({
     )
     .eq("listId", id);
 
-  console.log(movies);
+  const { data: watched } = await supabase
+    .from("watched")
+    .select("*")
+    .eq("user", user?.id);
+
+  // console.log(movies);
+  console.log(watched);
+  // console.log(user?.id);
 
   return (
     <>
@@ -49,9 +57,12 @@ export default async function List({
         <Header />
         <Link href="/">Home</Link>
         {movies?.map(({ movieId, rank, movies }, index) => {
+          const isWatched = watched?.find((w) => w.movie === movieId);
+          const movieWatchedId = isWatched ? isWatched.id : null;
           return (
-            <div>
-              {movieId},{movies.title},{rank}
+            <div key={index}>
+              {movieId},{movies?.title},{rank},{isWatched && "WATCHED"}{" "}
+              <Toggle {...{ movieId, user, id: movieWatchedId }} />
             </div>
           );
         })}
