@@ -38,7 +38,7 @@ export default async function Home() {
           return (
             <Link
               key={index}
-              className="p-4 border-solid border-2 border-slate-500"
+              className="p-4 border-solid border-2 border-slate-500 inline-flex"
               href={`/list/${item.id}`}
             >
               {item.title}

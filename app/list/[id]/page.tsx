@@ -47,7 +47,7 @@ export default async function List({
         )}
 
         <Header />
-        <div>list page {id}</div>
+        <Link href="/">Home</Link>
         {movies?.map(({ movieId, rank, movies }, index) => {
           return (
             <div>
