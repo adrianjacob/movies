@@ -8,7 +8,7 @@ import type { Database } from "@/lib/database.types";
 
 interface ToggleProps {
   movieId: string;
-  user: { [key: string]: any };
+  user: Record<string, any> | null;
   id: number | null;
 }
 
