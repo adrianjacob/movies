@@ -25,7 +25,7 @@ export default function Toggle({ movieId, user, id }: ToggleProps) {
       const { error } = await supabase.from("watched").delete().eq("id", id);
     } else {
       const { error } = await supabase.from("watched").insert({
-        user: user.id,
+        user: user?.id,
         movie: movieId,
       });
     }
