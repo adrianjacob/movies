@@ -6,11 +6,19 @@ import { useState, useEffect } from "react";
 
 import type { Database } from "@/lib/database.types";
 
-export default function Toggle({ movieId, user, id }) {
+interface ToggleProps {
+  movieId: string;
+  user: Object;
+  id: number | null;
+}
+
+export default function Toggle({ movieId, user, id }: ToggleProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
   const supabase = createClientComponentClient<Database>();
+
+  console.log(movieId, user, id)
 
   const handleToggle = async () => {
     if (id) {
