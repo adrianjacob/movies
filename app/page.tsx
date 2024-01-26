@@ -2,6 +2,7 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import Link from "next/link";
 import Header from "@/app/components/header";
+import Add from "@/app/components/add";
 
 import type { Database } from "@/lib/database.types";
 
@@ -45,6 +46,9 @@ export default async function Home() {
             </Link>
           );
         })}
+        <br />
+        <br />
+        <Add />
       </main>
     </>
   );

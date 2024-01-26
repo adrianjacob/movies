@@ -18,7 +18,7 @@ export default function Toggle({ movieId, user, id }: ToggleProps) {
   const router = useRouter();
   const supabase = createClientComponentClient<Database>();
 
-  console.log(movieId, user, id)
+  console.log(movieId, user, id);
 
   const handleToggle = async () => {
     if (id) {
@@ -31,6 +31,7 @@ export default function Toggle({ movieId, user, id }: ToggleProps) {
     }
 
     router.refresh();
+    // better to use revalidatePath()?
   };
 
   return (
