@@ -12,7 +12,7 @@ export async function GET(request: NextRequest, response: NextResponse) {
       .from("movies")
       .upsert([
         {
-          id: Math.floor(1000 + Math.random() * 9000).toString(),
+          id: Math.floor(1000 + Math.random() * 9000),
           title: "hello world",
           year: 1999,
         },
