@@ -17,6 +17,13 @@ export default function Add() {
     //   .select();
     //router.refresh();
     // better to use revalidatePath()?
+
+    // move to loop
+    const { data: foo, error } = await supabase
+      .from("lists")
+      .upsert([{ title: "Top 100 Animations", id: 16 }]) // need to pass 'id' as the genre id
+      .select();
+
     // GENRE IDS
     // MOVIE
     // Action          28
