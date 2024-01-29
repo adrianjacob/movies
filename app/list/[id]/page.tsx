@@ -56,16 +56,29 @@ export default async function List({
 
         <Header />
         <Link href="/">Home</Link>
-        {movies?.map(({ movieId, rank, movies }, index) => {
-          const isWatched = watched?.find((w) => w.movie === movieId);
-          const movieWatchedId = isWatched ? isWatched.id : null;
-          return (
-            <div key={index}>
-              {movieId},{movies?.title},{rank},{isWatched && "WATCHED"}{" "}
-              <Toggle {...{ movieId, user, id: movieWatchedId }} />
-            </div>
-          );
-        })}
+        <div className="grid grid-cols-4 gap-4">
+          {movies?.map(({ movieId, rank, movies }, index) => {
+            const isWatched = watched?.find((w) => w.movie === movieId);
+            const movieWatchedId = isWatched ? isWatched.id : null;
+            return (
+              <div key={index}>
+                <div>{rank}</div>
+                <div>{movieId}</div>
+                <div>{movies?.title}</div>
+                <div>
+                  <img
+                    src={`https://image.tmdb.org/t/p/original/${movies?.posterPath}`}
+                  />
+                </div>
+                <div>xxxxx</div>
+                <div>{isWatched && "WATCHED"}</div>
+                <div>
+                  <Toggle {...{ movieId, user, id: movieWatchedId }} />
+                </div>
+              </div>
+            );
+          })}
+        </div>
       </main>
     </>
   );
