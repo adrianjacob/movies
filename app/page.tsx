@@ -15,11 +15,17 @@ export default async function Home() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const { data: lists, error } = await supabase.from("lists").select();
+  const { data: lists } = await supabase.from("lists").select();
+  const { data: associations } = await supabase
+    .from("associations")
+    .select(`listId, movies (backdropPath)`)
+    .eq("rank", 1);
+
+  console.log(associations);
 
   return (
     <>
-      <main className="p-24">
+      <main>
         {user && (
           <>
             <div className="highlight">{user?.email}</div>
@@ -34,21 +40,30 @@ export default async function Home() {
         )}
 
         <Header />
-        <div>complete imdb</div>
-        {lists?.map((item, index) => {
-          return (
-            <Link
-              key={index}
-              className="p-4 border-solid border-2 border-slate-500 inline-flex"
-              href={`/list/${item.id}`}
-            >
-              {item.title}
-            </Link>
-          );
-        })}
+        <div className="grid grid-cols-4 gap-4 text-center">
+          {lists?.map((item, index) => {
+            console.log(item);
+            return (
+              <Link
+                key={index}
+                className="p-12 border-solid border-2 border-slate-700 rounded-md"
+                href={`/list/${item.id}`}
+              >
+                <div>TOP 100</div>
+                <div className="uppercase font-semibold text-2xl">
+                  {item.title}
+                </div>
+                <div>FILMS</div>
+                <img
+                  src={`https://image.tmdb.org/t/p/original/${associations.find((obj) => obj.listId === item.id)?.movies?.backdropPath}`}
+                />
+              </Link>
+            );
+          })}
+        </div>
+        {/* <br />
         <br />
-        <br />
-        <Add />
+        <Add /> */}
       </main>
     </>
   );

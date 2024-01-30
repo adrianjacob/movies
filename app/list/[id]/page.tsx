@@ -27,20 +27,21 @@ export default async function List({
         movies (*)
       `
     )
-    .eq("listId", id);
+    .eq("listId", id)
+    .order("rank", { ascending: true });
 
   const { data: watched } = await supabase
     .from("watched")
     .select("*")
     .eq("user", user?.id);
 
-  // console.log(movies);
-  console.log(watched);
+  //console.log(movies[0]);
+  // console.log(watched);
   // console.log(user?.id);
 
   return (
     <>
-      <main className="p-24">
+      <main>
         {user && (
           <>
             <div className="highlight">{user?.email}</div>
@@ -56,7 +57,16 @@ export default async function List({
 
         <Header />
         <Link href="/">Home</Link>
-        <div className="grid grid-cols-4 gap-4">
+        <div className="relative">
+          <div className="bg-gradient-to-t from-slate-950 to-transparent absolute w-full h-full"></div>
+          <div className="absolute w-full h-full flex items-center justify-center font-semibold text-5xl">
+            TOP 100 XXXXXX
+          </div>
+          <img
+            src={`https://image.tmdb.org/t/p/original/${movies[0].movies.backdropPath}`}
+          />
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
           {movies?.map(({ movieId, rank, movies }, index) => {
             const isWatched = watched?.find((w) => w.movie === movieId);
             const movieWatchedId = isWatched ? isWatched.id : null;
@@ -68,6 +78,11 @@ export default async function List({
                 <div>
                   <img
                     src={`https://image.tmdb.org/t/p/original/${movies?.posterPath}`}
+                  />
+                </div>
+                <div>
+                  <img
+                    src={`https://image.tmdb.org/t/p/original/${movies?.backdropPath}`}
                   />
                 </div>
                 <div>xxxxx</div>

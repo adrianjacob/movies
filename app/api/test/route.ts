@@ -22,7 +22,7 @@ export async function GET(request: Request) {
     .from("countries")
     .upsert({ id: "3242342", title: "Albania", year: "1999" })
     .select();
-  console.log(data2);
+  // console.log(data2);
   return NextResponse.json(data2);
 }
 
