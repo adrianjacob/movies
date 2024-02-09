@@ -36,7 +36,12 @@ export default function Toggle({ movieId, user, id }: ToggleProps) {
 
   return (
     <>
-      <button onClick={handleToggle}>Toggle</button>
+      <button
+        onClick={handleToggle}
+        className="underline absolute z-10 w-full h-full"
+      >
+        {/* {id ? "UNMARK AS WATCHED" : "MARK AS WATCHED"} */}
+      </button>
     </>
   );
 }
