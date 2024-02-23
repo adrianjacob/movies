@@ -96,10 +96,10 @@ export default async function List({
             return (
               <div
                 key={index}
-                className="border-solid border-2 border-slate-800 rounded-lg overflow-hidden relative transition-all hover:border-slate-500"
+                className="border-solid border-2 border-slate-800 rounded-lg overflow-hidden relative transition-all hover:transform hover:translate-y-[-2px] hover:border-slate-500"
               >
                 <div className="relative overflow-hidden">
-                  <div className="bg-gradient-to-t from-slate-950 to-transparent absolute w-full h-24 absolute bottom-0"></div>
+                  <div className="bg-gradient-to-t from-slate-950 to-transparent absolute w-full h-32 absolute bottom-0"></div>
                   <Toggle {...{ movieId, user, id: movieWatchedId }} />
                   <img
                     src={`https://image.tmdb.org/t/p/w780/${movies?.posterPath}`}

@@ -2,7 +2,6 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import Link from "next/link";
 import Header from "@/app/components/header";
-import Add from "@/app/components/add";
 
 import type { Database } from "@/lib/database.types";
 
@@ -16,7 +15,10 @@ export default async function Home() {
   } = await supabase.auth.getUser();
 
   // Get all the lists
-  const { data: lists } = await supabase.from("lists").select();
+  const { data: lists } = await supabase
+    .from("lists")
+    .select()
+    .order("title", { ascending: true });
 
   // Get details (image) of the top ranked moveie in each category
   const { data: associations } = await supabase
@@ -65,7 +67,7 @@ export default async function Home() {
             return (
               <Link
                 key={index}
-                className="border-solid border-2 border-slate-800 rounded-lg overflow-hidden transition-all hover:border-slate-500"
+                className="border-solid border-2 border-slate-800 rounded-lg overflow-hidden transition-all hover:transform hover:translate-y-[-2px] hover:border-slate-500"
                 href={`/list/${item.id}`}
               >
                 <div className="relative">
@@ -104,9 +106,6 @@ export default async function Home() {
             );
           })}
         </div>
-        {/* <br />
-        <br />
-        <Add /> */}
       </main>
     </>
   );

@@ -29,9 +29,82 @@ import type { Database } from "@/lib/database.types";
 // Western         37
 
 const genres = {
-  action: 28,
-  adventure: 12,
-  animation: 16,
+  // ab: {
+  //   id: 1, // Not a tmdb list but using it for top of all time
+  //   vote_count_min: 3000,
+  // },
+  action: {
+    id: 28,
+    vote_count_min: 3000,
+  },
+  adventure: {
+    id: 12,
+    vote_count_min: 3000,
+  },
+  animation: {
+    id: 16,
+    vote_count_min: 3000,
+  },
+  comedy: {
+    id: 35,
+    vote_count_min: 3000,
+  },
+  crime: {
+    id: 80,
+    vote_count_min: 3000,
+  },
+  documentary: {
+    id: 99,
+    vote_count_min: 300,
+  },
+  drama: {
+    id: 18,
+    vote_count_min: 3000,
+  },
+  family: {
+    id: 10751,
+    vote_count_min: 3000,
+  },
+  fantasy: {
+    id: 14,
+    vote_count_min: 3000,
+  },
+  history: {
+    id: 36,
+    vote_count_min: 1750,
+  },
+  horror: {
+    id: 27,
+    vote_count_min: 3000,
+  },
+  music: {
+    id: 10402,
+    vote_count_min: 750,
+  },
+  mystery: {
+    id: 9648,
+    vote_count_min: 3000,
+  },
+  romance: {
+    id: 10749,
+    vote_count_min: 3500,
+  },
+  "sci-fi": {
+    id: 878,
+    vote_count_min: 3500,
+  },
+  thriller: {
+    id: 53,
+    vote_count_min: 3500,
+  },
+  war: {
+    id: 10752,
+    vote_count_min: 1000,
+  },
+  western: {
+    id: 37,
+    vote_count_min: 350,
+  },
 };
 
 export default function Add() {
@@ -45,9 +118,9 @@ export default function Add() {
     const bearerToken =
       "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0MzhjNzNlZmJiZTNhMzc0MzM0NWQ2ZjQzNDM3MTIzYyIsInN1YiI6IjY1YTk0YWM1MGU1YWJhMDEzMjdkZjlhYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ec__noV-OUy1tp7k22oB2EwSZovUoALysF62Hz2CD94";
 
-    const foo = async (genre, genreId, i) => {
+    const foo = async (genre, genreId, genreVotes, i) => {
       const response = await fetch(
-        `https://api.themoviedb.org/4/discover/movie?sort_by=vote_average.desc&vote_count.gte=3500&page=${i}&with_original_language=en&with_genres=${genreId}`,
+        `https://api.themoviedb.org/3/discover/movie?sort_by=vote_average.desc&vote_count.gte=${genreVotes}&page=${i}&with_original_language=en&with_genres=${genreId}`,
         {
           method: "GET",
           headers: {
@@ -115,9 +188,10 @@ export default function Add() {
 
     await supabase.from("associations").delete().neq("id", 0); // delete all rows as order may have changed
 
-    Object.entries(genres).map(async ([genre, id]) => {
+    // 20 per 'page'
+    Object.entries(genres).map(async ([genre, genreData]) => {
       for (let i = 1; i <= 2; i++) {
-        await foo(genre, id, i);
+        await foo(genre, genreData.id, genreData.vote_count_min, i);
       }
     });
 
